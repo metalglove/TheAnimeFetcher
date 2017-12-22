@@ -4,14 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using TheAnimeFetcher.Classes.Authentication;
 
 namespace TheAnimeFetcher.Classes.XML
 {
+    [XmlRoot("user")]
     public class User
     {
-        [XmlAttribute(AttributeName = "id")]
-        public uint Id { get; set; }
-        [XmlAttribute(AttributeName = "username")]
-        public string Username { get; set; }
+        [XmlElement(ElementName = "id")]
+        private uint _Id;
+        public uint Id { get { return _Id; } set { _Id = value; IsAllowed = true; } }
+        private string _Username;
+        [XmlElement(ElementName = "username")]
+        public string Username { get { return _Username; } set { _Username = value; IsAllowed = true; } }
+        // IsAllowed is either set by Username or Id, does not matter.
+        public bool IsAllowed { get; set; } = false;
+        public Credentials Credentials { get; set; }
     }
 }

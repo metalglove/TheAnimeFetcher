@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TheAnimeFetcher.Classes.Helpers;
+using TheAnimeFetcher.Classes.XML;
 
 namespace TheAnimeFetcher.Classes.Authentication
 {
-    public static class Credentials
+    public class Credentials
     {
-        public static bool Verify(string username, string password)
+        public string Username { get; private set; }
+        public string Password { get; private set; }
+
+        public Credentials(string Username, string Password)
         {
-            throw new NotImplementedException();
+            this.Username = Username;
+            this.Password = Password;
         }
     }
 }

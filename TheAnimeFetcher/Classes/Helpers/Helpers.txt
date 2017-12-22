@@ -4,6 +4,8 @@ Helper classes are classes that are more generic and don't care what application
 They are reusable classes.
 
 Classes:
-	Navigator
+	-Navigator
 		The Navigator class is used for navigation in the application. 
 		It is using the RootView its Frame as the main instance for navigating with the Navigate function.
+	-XMLConverter
+		The XMLConverter class is used for converting strings to classes or classes to strings.

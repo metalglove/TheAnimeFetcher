@@ -15,7 +15,7 @@
             <TextBlock x:Name="tbPassword" Text="Password"/>
             <PasswordBox x:Name="pbPassword"/>
             <CheckBox x:Name="cbRemember" Content="Remember your credentials?"/>
-            <Button x:Name="btLogin" Content="Login" FontSize="17" Background="#FF4165BA" Foreground="White" HorizontalAlignment="Stretch" Margin="5"/>
+            <Button x:Name="btLogin" Content="Login" Click="btLogin_Click" FontSize="17" Background="#FF4165BA" Foreground="White" HorizontalAlignment="Stretch" Margin="5"/>
             <Button x:Name="btSignUp" Content="Sign Up" FontSize="17" Background="#FFE1E7F5" Foreground="#FF2E51A2" HorizontalAlignment="Stretch" Margin="5"/>
         </StackPanel>
     </StackPanel>

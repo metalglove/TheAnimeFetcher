@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TheAnimeFetcher.Classes.Controllers
 {
-    public class Home
+    public class HomeController
     {
     }
 }
