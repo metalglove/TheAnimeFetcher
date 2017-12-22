@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TheAnimeFetcher.Classes.Utils
+namespace TheAnimeFetcher.Classes.DesignPatterns
 {
     public abstract class Singleton<T>  where T : new()
     {

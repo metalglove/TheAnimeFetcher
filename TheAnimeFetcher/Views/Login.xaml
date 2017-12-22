@@ -1,0 +1,22 @@
+﻿<Page
+    x:Class="TheAnimeFetcher.Views.Login"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TheAnimeFetcher.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Image x:Name="imLogo" Source="/Images/2000px-Anime_eye.png" MaxWidth="400" Stretch="UniformToFill"/>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock x:Name="tbUsername" Text="Username"/>
+            <TextBox x:Name="tbUser"/>
+            <TextBlock x:Name="tbPassword" Text="Password"/>
+            <PasswordBox x:Name="pbPassword"/>
+            <CheckBox x:Name="cbRemember" Content="Remember your credentials?"/>
+            <Button x:Name="btLogin" Content="Login" FontSize="17" Background="#FF4165BA" Foreground="White" HorizontalAlignment="Stretch" Margin="5"/>
+            <Button x:Name="btSignUp" Content="Sign Up" FontSize="17" Background="#FFE1E7F5" Foreground="#FF2E51A2" HorizontalAlignment="Stretch" Margin="5"/>
+        </StackPanel>
+    </StackPanel>
+</Page>

@@ -1,0 +1,9 @@
+﻿--Mario Lucassen
+
+Helper classes are classes that are more generic and don't care what application they are helping.
+They are reusable classes.
+
+Classes:
+	Navigator
+		The Navigator class is used for navigation in the application. 
+		It is using the RootView its Frame as the main instance for navigating with the Navigate function.

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TheAnimeFetcher.Classes.Utils;
+using TheAnimeFetcher.Classes.DesignPatterns;
 using Windows.UI.Xaml.Controls;
 
-namespace TheAnimeFetcher.Base
+namespace TheAnimeFetcher.Classes.Helpers
 {
     public class Navigator : Singleton<Navigator>
     {
@@ -19,6 +19,11 @@ namespace TheAnimeFetcher.Base
         public void Navigate(Type page, object parameter)
         {
             RootFrame.Navigate(page, parameter);
+            RemoveFromStack();
+        }
+        public void Navigate(Type page)
+        {
+            RootFrame.Navigate(page);
             RemoveFromStack();
         }
         private void RemoveFromStack()
