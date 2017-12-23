@@ -9,3 +9,5 @@ Classes:
 		It is using the RootView its Frame as the main instance for navigating with the Navigate function.
 	-XMLConverter
 		The XMLConverter class is used for converting strings to classes or classes to strings.
+	-Singleton
+		The Singleton class is used for creating a class that only allows 1 instance either thread-safe or not thread-safe.

@@ -32,8 +32,6 @@ namespace TheAnimeFetcher
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
-            //TODO: Window.Current.SetTitleBar(); revisit later
-
             if (rootFrame == null)
             {
                 rootFrame = new Frame();

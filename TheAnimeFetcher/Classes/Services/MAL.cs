@@ -24,15 +24,15 @@ namespace TheAnimeFetcher.Classes.Services
         public static async Task<User> VerifyCredentials(Credentials credentials)
         {
             HttpWebResponse response = null;
-            User User = null;
+            User User = new User();
             try
             {
                 response = await SendHttpGETRequest(credentials, "account/verify_credentials.xml");
                 if (EnsureStatusCode(response))
                 {
                     StreamReader responseStream = new StreamReader(response.GetResponseStream());
-                    User user = XMLConverter.DeserializeXmlAsStringToClass<User>(responseStream.ReadToEnd());
-                    user.Credentials = credentials;
+                    User = XMLConverter.DeserializeXmlAsStringToClass<User>(responseStream.ReadToEnd());
+                    User.Credentials = credentials;
                 }
             }
             catch (WebException ex)
@@ -41,11 +41,7 @@ namespace TheAnimeFetcher.Classes.Services
             }
             finally
             {
-                if (response == null)
-                {
-                    User = new User();
-                }
-                else
+                if (response != null)
                 {
                     response.Dispose();
                 }

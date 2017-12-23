@@ -33,8 +33,7 @@ namespace TheAnimeFetcher.Views
                 SetBorderBrushes();
                 return;
             }
-            Credentials credentials = new Credentials(tbUser.Text, pbPassword.Password);
-            if (!await LoginController.LoginAsync(credentials))
+            if (!await LoginController.LoginAsync(new Credentials() { Username = tbUser.Text, Password = pbPassword.Password }))
             {
                 SetBorderBrushes();
             }

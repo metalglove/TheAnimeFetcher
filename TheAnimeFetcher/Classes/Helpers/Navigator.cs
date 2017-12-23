@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TheAnimeFetcher.Classes.DesignPatterns;
+using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace TheAnimeFetcher.Classes.Helpers
@@ -20,11 +21,17 @@ namespace TheAnimeFetcher.Classes.Helpers
         {
             RootFrame.Navigate(page, parameter);
             RemoveFromStack();
+            SetTitle(page.Name);
         }
         public void Navigate(Type page)
         {
             RootFrame.Navigate(page);
             RemoveFromStack();
+            SetTitle(page.Name);
+        }
+        private void SetTitle(string title)
+        {
+            ApplicationView.GetForCurrentView().Title = title;
         }
         private void RemoveFromStack()
         {
