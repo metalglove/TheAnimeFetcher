@@ -95,6 +95,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\Controllers\ControllerBase.cs" />
     <Compile Include="Classes\Controllers\HomeController.cs" />
     <Compile Include="Classes\Helpers\XMLConverter.cs" />
     <Compile Include="Classes\Services\MAL.cs" />
