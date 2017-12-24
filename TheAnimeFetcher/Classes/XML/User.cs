@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using TheAnimeFetcher.Classes.Authentication;
 
 namespace TheAnimeFetcher.Classes.XML
 {
@@ -19,6 +19,6 @@ namespace TheAnimeFetcher.Classes.XML
         public string Username { get { return _Username; } set { _Username = value; IsAllowed = true; } }
         // IsAllowed is either set by Username or Id, does not matter.
         public bool IsAllowed { get; set; } = false;
-        public Credentials Credentials { get; set; }
+        public NetworkCredential Credentials { get; set; }
     }
 }

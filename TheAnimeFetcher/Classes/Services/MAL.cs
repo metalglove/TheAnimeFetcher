@@ -9,7 +9,6 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using TheAnimeFetcher.Classes.Authentication;
 using TheAnimeFetcher.Classes.Helpers;
 using TheAnimeFetcher.Classes.XML;
 
@@ -21,7 +20,7 @@ namespace TheAnimeFetcher.Classes.Services
         private const string MAL_API_URL = "https://myanimelist.net/api/";
         #endregion
 
-        public static async Task<User> VerifyCredentials(Credentials credentials)
+        public static async Task<User> VerifyCredentials(NetworkCredential credentials)
         {
             HttpWebResponse response = null;
             User User = new User();
@@ -145,12 +144,12 @@ namespace TheAnimeFetcher.Classes.Services
             }
             return returnval;
         }
-        private static async Task<HttpWebResponse> SendHttpGETRequest(Credentials credentials, string requesteduri) => (await GetHttpWebRequest(credentials, requesteduri).GetResponseAsync()) as HttpWebResponse;
-        private static HttpWebRequest GetHttpWebRequest(Credentials credentials, string requesteduri)
+        private static async Task<HttpWebResponse> SendHttpGETRequest(NetworkCredential credentials, string requesteduri) => (await GetHttpWebRequest(credentials, requesteduri).GetResponseAsync()) as HttpWebResponse;
+        private static HttpWebRequest GetHttpWebRequest(NetworkCredential credentials, string requesteduri)
         {
             HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(MAL_API_URL + requesteduri);
             webRequest.ContentType = "xml/txt";
-            webRequest.Credentials = new NetworkCredential(credentials.Username, credentials.Password);
+            webRequest.Credentials = credentials;
             return webRequest;
         }
     }

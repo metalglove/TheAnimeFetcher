@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices.WindowsRuntime;
-using TheAnimeFetcher.Classes.Authentication;
 using TheAnimeFetcher.Classes.Controllers;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -33,7 +33,7 @@ namespace TheAnimeFetcher.Views
                 SetBorderBrushes();
                 return;
             }
-            if (!await LoginController.LoginAsync(new Credentials() { Username = tbUser.Text, Password = pbPassword.Password }))
+            if (!await LoginController.LoginAsync(new NetworkCredential() { UserName = tbUser.Text, Password = pbPassword.Password }))
             {
                 SetBorderBrushes();
             }
