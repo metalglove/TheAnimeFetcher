@@ -1,54 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml;
-using TheAnimeFetcher.Classes.Helpers;
-using TheAnimeFetcher.Classes.XML;
+using System.ComponentModel;
+using TheAnimeFetcher.Classes.Data;
 
 namespace TheAnimeFetcher.Classes.Services
 {
-    public static class MAL
+    public abstract class ServiceBase
     {
-        #region Fields
-        private const string MAL_API_URL = "https://myanimelist.net/api/";
-        #endregion
-
-        public static async Task<User> VerifyCredentials(NetworkCredential credentials)
+        protected static async Task<HttpWebResponse> SendHttpWebGETRequest(NetworkCredential credentials, string requesteduri, ContentType contentType)
         {
-            HttpWebResponse response = null;
-            User User = new User();
-            try
-            {
-                response = await SendHttpGETRequest(credentials, "account/verify_credentials.xml");
-                if (EnsureStatusCode(response))
-                {
-                    StreamReader responseStream = new StreamReader(response.GetResponseStream());
-                    User = XMLConverter.DeserializeXmlAsStringToClass<User>(responseStream.ReadToEnd());
-                    User.Credentials = credentials;
-                }
-            }
-            catch (WebException ex)
-            {
-                Debug.Write(ex.ToString());
-            }
-            finally
-            {
-                if (response != null)
-                {
-                    response.Dispose();
-                }
-            }
-
-            return User;
+            HttpWebRequest request = GetHttpWebRequest(credentials, requesteduri, contentType);
+            HttpWebResponse response = await request.GetResponseAsync() as HttpWebResponse;
+            return response;
         }
-        private static bool EnsureStatusCode(HttpWebResponse response)
+        private static HttpWebRequest GetHttpWebRequest(NetworkCredential credentials, string requesteduri, ContentType contentType)
+        {
+            HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(requesteduri);
+            webRequest.CookieContainer = UserData.Instance.CookieContainer;
+            webRequest.ContentType = contentType.GetValue();
+            webRequest.Credentials = credentials;
+            return webRequest;
+        }
+        protected static bool EnsureStatusCode(HttpWebResponse response)
         {
             bool returnval = false;
             switch (response.StatusCode)
@@ -143,14 +120,6 @@ namespace TheAnimeFetcher.Classes.Services
                     break;
             }
             return returnval;
-        }
-        private static async Task<HttpWebResponse> SendHttpGETRequest(NetworkCredential credentials, string requesteduri) => (await GetHttpWebRequest(credentials, requesteduri).GetResponseAsync()) as HttpWebResponse;
-        private static HttpWebRequest GetHttpWebRequest(NetworkCredential credentials, string requesteduri)
-        {
-            HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(MAL_API_URL + requesteduri);
-            webRequest.ContentType = "xml/txt";
-            webRequest.Credentials = credentials;
-            return webRequest;
         }
     }
 }

@@ -11,3 +11,7 @@ Classes:
 		The XMLConverter class is used for converting strings to classes or classes to strings.
 	-Singleton
 		The Singleton class is used for creating a class that only allows 1 instance either thread-safe or not thread-safe.
+	-HTMLConverter
+		The HTMLConverter class is used for converting strings into classes. //Might be removed later
+	-JSONConverter
+		The JSONConverter class is used for converting strings into classes using the NewtonSoft.Json nugetpackage.

@@ -97,9 +97,29 @@
     </Compile>
     <Compile Include="Classes\Controllers\ControllerBase.cs" />
     <Compile Include="Classes\Controllers\HomeController.cs" />
+    <Compile Include="Classes\Data\UserData.cs" />
+    <Compile Include="Classes\Helpers\HTMLConverter.cs" />
+    <Compile Include="Classes\Helpers\JSONConverter.cs" />
     <Compile Include="Classes\Helpers\XMLConverter.cs" />
-    <Compile Include="Classes\Services\MAL.cs" />
+    <Compile Include="Classes\HTML\Anime.cs" />
+    <Compile Include="Classes\HTML\Item.cs" />
+    <Compile Include="Classes\HTML\Manga.cs" />
+    <Compile Include="Classes\JSON\Anime.cs" />
+    <Compile Include="Classes\JSON\AnimeList.cs" />
+    <Compile Include="Classes\JSON\Manga.cs" />
+    <Compile Include="Classes\JSON\MangaList.cs" />
+    <Compile Include="Classes\Services\ContentType.cs" />
+    <Compile Include="Classes\HTML\Recommendations.cs" />
+    <Compile Include="Classes\Services\ServiceBase.cs" />
+    <Compile Include="Classes\Services\OfficialMALAPI.cs" />
+    <Compile Include="Classes\Services\UnofficialMALAPI.cs" />
     <Compile Include="Classes\XML\User.cs" />
+    <Compile Include="Controls\AnimeControl.xaml.cs">
+      <DependentUpon>AnimeControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AnimeListControl.xaml.cs">
+      <DependentUpon>AnimeListControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
@@ -176,14 +196,26 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="HtmlAgilityPack">
+      <Version>1.6.10</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.4</Version>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>10.0.3</Version>
+    </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Controls\" />
-  </ItemGroup>
-  <ItemGroup>
+    <Page Include="Controls\AnimeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\AnimeListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -5,17 +5,15 @@
     xmlns:local="using:TheAnimeFetcher.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:c="using:TheAnimeFetcher.Classes.JSON"
     mc:Ignorable="d">
-
+    
     <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Stretch">
             <Image Source="/Images/banner.png" MaxHeight="300"/>
-            <Grid Background="DarkGoldenrod">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="3*"/>
-                </Grid.RowDefinitions>
-            </Grid>
+            <Frame Name="ContentFrame">
+                
+            </Frame>
         </StackPanel>
     </ScrollViewer>
 </Page>
