@@ -4,40 +4,59 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TheAnimeFetcher.Classes.Data;
 using TheAnimeFetcher.Classes.HTML;
 
 namespace TheAnimeFetcher.Classes.Helpers
 {
     public static class HTMLConverter
     {
-        public static List<Anime> GetAnimeRecommendations(string HTMLAsString)
+        public static List<Item> GetAnimeRecommendations(string HTMLAsString)
         {
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(HTMLAsString);
-            string unfilteredjsonstring = doc.GetHtmlDocumentBody().GetChildNodeById("v-auto-recommendation-personalized_anime").GetCustomAttributeValue("data-initial-data");
-            return new List<Anime>();
+            string unfilteredjsonstring = doc.GetElementbyId("v-auto-recommendation-personalized_anime").GetHtmlAttributeValue("data-initial-data");
+            return JSONConverter.DeserializeJSon<Rootobject>("{ \"recommended_animes\":" + unfilteredjsonstring + "}").recommended_animes;
         }
-        public static List<Manga> GetMangaRecommendations(string responseAsString)
+        public static List<Item> GetMangaRecommendations(string HTMLAsString)
         {
-            throw new NotImplementedException();
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(HTMLAsString);
+            string unfilteredjsonstring = doc.GetElementbyId("v-auto-recommendation-personalized_manga").GetHtmlAttributeValue("data-initial-data");
+            return JSONConverter.DeserializeJSon<Rootobject>("{ \"recommended_mangas\":" + unfilteredjsonstring + "}").recommended_mangas;
         }
-
-        private static HtmlNode GetHtmlDocumentBody(this HtmlDocument htmlDocument)
+        public static void ParseTokenFromHtml(string HTMLAsString)
         {
-            return htmlDocument.DocumentNode.SelectSingleNode("//body");
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(HTMLAsString);
+            string Token = doc.GetHtmlNodesMeta().GetChildNodeByName("csrf_token").GetHtmlAttributeValue("content");
+            if (Token == "")
+            {
+                throw new ArgumentException("csrf_token was not found");
+            }
+            UserData.Instance.CSRF_Token = Token;
         }
-        private static HtmlNode GetChildNodeById(this HtmlNode htmlNode, string Id)
+        private static HtmlNodeCollection GetHtmlNodesMeta(this HtmlDocument htmlDocument)
         {
-            return htmlNode.ChildNodes.Where(node => node.Id == Id).Single();
+            return htmlDocument.DocumentNode.SelectNodes("//meta");
         }
-        private static string GetCustomAttributeValue(this HtmlNode htmlNode, string CustomAttributeName)
+        private static HtmlNode GetChildNodeByName(this HtmlNodeCollection htmlNodes, string Name)
         {
-            string test = "";
-            string test2 = "";
-            HtmlAttribute attr = htmlNode.Attributes.AttributesWithName(CustomAttributeName).Single();
-            test = attr.Value;
-            test2 = attr.DeEntitizeValue;
-            return test;    
+            foreach (HtmlNode node in htmlNodes)
+            {
+                foreach (HtmlAttribute attr in node.Attributes)
+                {
+                    if(attr.Value == Name)
+                    {
+                        return node;
+                    }
+                }
+            }
+            return null;
+        }
+        private static string GetHtmlAttributeValue(this HtmlNode htmlAttribute, string CustomAttributeName)
+        {
+           return htmlAttribute.Attributes.AttributesWithName(CustomAttributeName).Single().DeEntitizeValue;
         }
     }
 }

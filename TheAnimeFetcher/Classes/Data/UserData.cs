@@ -14,6 +14,7 @@ namespace TheAnimeFetcher.Classes.Data
     {
         public User User { get; set; } = new User();
         public CookieContainer CookieContainer { get; set; } = new CookieContainer();
+        public string CSRF_Token { get; set; }
         public AnimeList AnimeList { get; set; }
         public MangaList MangaList { get; set; }
         public bool AnimeListChanged { get; set; } = false;

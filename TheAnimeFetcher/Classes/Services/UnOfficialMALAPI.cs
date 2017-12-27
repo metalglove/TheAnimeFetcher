@@ -1,10 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using HtmlAgilityPack;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using TheAnimeFetcher.Classes.Data;
@@ -19,8 +21,46 @@ namespace TheAnimeFetcher.Classes.Services
         #region Fields
         private const string MAL_URL = "https://myanimelist.net/";
         #endregion
+
+        #region Token
+        private static async Task GetToken()
+        {
+            HTMLConverter.ParseTokenFromHtml(await GetDataAsync(MAL_URL + "Login.php"));
+        }
+        private static async Task CheckForToken()
+        {
+            if (UserData.Instance.CSRF_Token == null)
+            {
+                await GetToken();
+                await Login();
+            }
+        }
+        private static async Task Login()
+        {
+            string z = await PostDataAsync(MAL_URL + "Login.php", LoginPostData);
+        }
+
+        private static FormUrlEncodedContent LoginPostData
+        {
+            get
+            {
+                List<KeyValuePair<string, string>> LoginKeyValuePair = new List<KeyValuePair<string, string>>
+                {
+                    new KeyValuePair<string, string>("user_name", UserData.Instance.User.Credentials.UserName),
+                    new KeyValuePair<string, string>("password", UserData.Instance.User.Credentials.Password),
+                    new KeyValuePair<string, string>("sublogin", "Login"),
+                    new KeyValuePair<string, string>("cookie", "1"),
+                    new KeyValuePair<string, string>("submit", "1"),
+                    new KeyValuePair<string, string>("csrf_token", UserData.Instance.CSRF_Token)
+                };
+                return new FormUrlEncodedContent(LoginKeyValuePair);
+            }
+        }
+        #endregion
+
         public static async Task<Recommendations> GetRecommendations(NetworkCredential credentials)
         {
+            await CheckForToken();
             Recommendations recommendations = new Recommendations();
             HttpWebResponse response = null;
             try

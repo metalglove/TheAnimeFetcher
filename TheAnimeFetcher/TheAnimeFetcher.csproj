@@ -101,9 +101,7 @@
     <Compile Include="Classes\Helpers\HTMLConverter.cs" />
     <Compile Include="Classes\Helpers\JSONConverter.cs" />
     <Compile Include="Classes\Helpers\XMLConverter.cs" />
-    <Compile Include="Classes\HTML\Anime.cs" />
-    <Compile Include="Classes\HTML\Item.cs" />
-    <Compile Include="Classes\HTML\Manga.cs" />
+    <Compile Include="Classes\HTML\Rootobject.cs" />
     <Compile Include="Classes\JSON\Anime.cs" />
     <Compile Include="Classes\JSON\AnimeList.cs" />
     <Compile Include="Classes\JSON\Manga.cs" />

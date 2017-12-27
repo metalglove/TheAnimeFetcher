@@ -6,20 +6,44 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using TheAnimeFetcher.Classes.Data;
+using System.Net.Http;
 
 namespace TheAnimeFetcher.Classes.Services
 {
     public abstract class ServiceBase
     {
+        #region HttpClient
+        public static async Task<string> PostDataAsync(string url, FormUrlEncodedContent postData)
+        {
+            HttpClient client = new HttpClient(new HttpClientHandler() { CookieContainer = UserData.Instance.CookieContainer, AllowAutoRedirect = false });
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, url);
+            request.Content = postData;
+            HttpResponseMessage response = await client.PostAsync(request.RequestUri, request.Content);
+            return await response.Content.ReadAsStringAsync();
+        }
+        public static async Task<string> GetDataAsync(string url)
+        {
+            HttpClient httpClient = new HttpClient(new HttpClientHandler() { CookieContainer = UserData.Instance.CookieContainer, AllowAutoRedirect = false });
+            return await httpClient.GetStringAsync(url);
+        }
+        public static async Task<string> GetDataAsync(string url, NetworkCredential credentials)
+        {
+            HttpClient httpClient = new HttpClient(new HttpClientHandler() { CookieContainer = UserData.Instance.CookieContainer, AllowAutoRedirect = false, Credentials = credentials });
+            return await httpClient.GetStringAsync(url);
+        }
+        #endregion
+
+        #region WebClient
         protected static async Task<HttpWebResponse> SendHttpWebGETRequest(NetworkCredential credentials, string requesteduri, ContentType contentType)
         {
-            HttpWebRequest request = GetHttpWebRequest(credentials, requesteduri, contentType);
+            HttpWebRequest request = GetHttpWebGetRequest(credentials, requesteduri, contentType);
             HttpWebResponse response = await request.GetResponseAsync() as HttpWebResponse;
             return response;
         }
-        private static HttpWebRequest GetHttpWebRequest(NetworkCredential credentials, string requesteduri, ContentType contentType)
+        private static HttpWebRequest GetHttpWebGetRequest(NetworkCredential credentials, string requesteduri, ContentType contentType)
         {
             HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(requesteduri);
+            webRequest.Method = "GET";
             webRequest.CookieContainer = UserData.Instance.CookieContainer;
             webRequest.ContentType = contentType.GetValue();
             webRequest.Credentials = credentials;
@@ -121,5 +145,6 @@ namespace TheAnimeFetcher.Classes.Services
             }
             return returnval;
         }
+        #endregion WebClient
     }
 }

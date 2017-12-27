@@ -4,7 +4,7 @@ namespace TheAnimeFetcher.Classes.HTML
 {
     public class Recommendations
     {
-        public List<Anime> AnimeRecommendations = new List<Anime>();
-        public List<Manga> MangaRecommendations = new List<Manga>();
+        public List<Item> AnimeRecommendations = new List<Item>();
+        public List<Item> MangaRecommendations = new List<Item>();
     }
 }

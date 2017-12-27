@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HtmlAgilityPack;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -9,6 +10,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using TheAnimeFetcher.Classes.Data;
 using TheAnimeFetcher.Classes.Helpers;
 using TheAnimeFetcher.Classes.XML;
 
@@ -19,7 +21,7 @@ namespace TheAnimeFetcher.Classes.Services
         #region Fields
         private const string MAL_API_URL = "https://myanimelist.net/api/";
         #endregion
-
+        
         public static async Task<User> VerifyCredentials(NetworkCredential credentials)
         {
             HttpWebResponse response = null;

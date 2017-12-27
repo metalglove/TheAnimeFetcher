@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TheAnimeFetcher.Classes.Controllers;
 using TheAnimeFetcher.Classes.Helpers;
+using TheAnimeFetcher.Classes.HTML;
 using TheAnimeFetcher.Classes.JSON;
 using TheAnimeFetcher.Controls;
 using Windows.Foundation;
@@ -22,6 +23,7 @@ namespace TheAnimeFetcher.Views
 {
     public sealed partial class Home : Page
     {
+        public Recommendations Recommandations { get; private set; }
         public AnimeList AnimeList { get; set; }
         public MangaList MangaList { get; set; }
         public Home()
@@ -31,7 +33,7 @@ namespace TheAnimeFetcher.Views
         }
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            //Recommandations = await HomeController.GetRecommendations();
+            Recommandations = await HomeController.GetRecommendations();
             AnimeList = await HomeController.GetAnimeList();
             MangaList = await HomeController.GetMangaList();
             HomeController.ContentFrameNavigate(typeof(AnimeListControl), AnimeList);
