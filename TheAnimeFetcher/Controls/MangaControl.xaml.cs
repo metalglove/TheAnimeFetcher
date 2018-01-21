@@ -14,15 +14,17 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
+// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
+
 namespace TheAnimeFetcher.Controls
 {
-    public sealed partial class AnimeControl : UserControl
+    public sealed partial class MangaControl : UserControl
     {
-        public Anime Anime { get; private set; }
-        public AnimeControl(Anime Anime)
+        public Manga Manga { get; private set; }
+        public MangaControl(Manga Manga)
         {
             this.InitializeComponent();
-            this.Anime = Anime;
+            this.Manga = Manga;
             DataContext = this;
         }
     }

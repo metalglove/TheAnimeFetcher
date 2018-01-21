@@ -23,9 +23,9 @@ namespace TheAnimeFetcher.Views
 {
     public sealed partial class Home : Page
     {
-        public Recommendations Recommandations { get; private set; }
-        public AnimeList AnimeList { get; set; }
-        public MangaList MangaList { get; set; }
+        public Recommendations Recommendations { get; private set; }
+        public AnimeList AnimeList { get; private set; }
+        public MangaList MangaList { get; private set; }
         public Home()
         {
             this.InitializeComponent();
@@ -33,10 +33,12 @@ namespace TheAnimeFetcher.Views
         }
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            Recommandations = await HomeController.GetRecommendations();
+            Recommendations = await HomeController.GetRecommendations();
             AnimeList = await HomeController.GetAnimeList();
             MangaList = await HomeController.GetMangaList();
             HomeController.ContentFrameNavigate(typeof(AnimeListControl), AnimeList);
+            //HomeController.ContentFrameNavigate(typeof(MangaListControl), MangaList);
+            //HomeController.ContentFrameNavigate(typeof(RecommendationsControl), Recommendations);
         }
     }
 }

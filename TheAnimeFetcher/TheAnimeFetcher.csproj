@@ -118,6 +118,15 @@
     <Compile Include="Controls\AnimeListControl.xaml.cs">
       <DependentUpon>AnimeListControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MangaControl.xaml.cs">
+      <DependentUpon>MangaControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MangaListControl.xaml.cs">
+      <DependentUpon>MangaListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RecommendationsControl.xaml.cs">
+      <DependentUpon>RecommendationsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
@@ -211,6 +220,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\AnimeListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MangaControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MangaListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\RecommendationsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

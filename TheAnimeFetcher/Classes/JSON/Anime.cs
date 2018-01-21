@@ -35,7 +35,6 @@ namespace TheAnimeFetcher.Classes.JSON
                 anime_image_pathHighRes = ConvertImagePathToHighRes(value);
             }
         }
-
         private string ConvertImagePathToHighRes(string value)
         {
             string mainpath = "https://myanimelist.cdn-dena.com/images/";
@@ -44,7 +43,6 @@ namespace TheAnimeFetcher.Classes.JSON
             int endIndex = newvalue.IndexOf(".");
             return mainpath + newvalue.Substring(startIndex, endIndex - startIndex).Replace("//", "/") + ".jpg";
         }
-
         public string anime_image_pathHighRes { get; set; }
         public bool is_added_to_list { get; set; }
         public string anime_media_type_string { get; set; }
