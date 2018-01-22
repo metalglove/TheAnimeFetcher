@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using TheAnimeFetcher.Classes.Services.Enumerations;
+using TheAnimeFetcher.Classes.Constants.Enumerations;
 
 namespace TheAnimeFetcher.Classes.JSON
 {

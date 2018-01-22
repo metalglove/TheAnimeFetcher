@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using TheAnimeFetcher.Classes.Data;
 using System.Net.Http;
-using TheAnimeFetcher.Classes.Services.Enumerations;
+using TheAnimeFetcher.Classes.Constants.Enumerations;
 
 namespace TheAnimeFetcher.Classes.Services
 {

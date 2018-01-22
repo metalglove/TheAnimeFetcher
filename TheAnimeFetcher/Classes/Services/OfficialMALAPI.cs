@@ -12,9 +12,8 @@ using System.Threading.Tasks;
 using System.Xml;
 using TheAnimeFetcher.Classes.Data;
 using TheAnimeFetcher.Classes.Helpers;
-using TheAnimeFetcher.Classes.Services.Enumerations;
+using TheAnimeFetcher.Classes.Constants.Enumerations;
 using TheAnimeFetcher.Classes.XML;
-using TheAnimeFetcher.Classes.Services;
 
 namespace TheAnimeFetcher.Classes.Services
 {

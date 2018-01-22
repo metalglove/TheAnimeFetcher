@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Xml.Serialization;
-using TheAnimeFetcher.Classes.Services.Enumerations;
+using TheAnimeFetcher.Classes.Constants.Enumerations;
 
 namespace TheAnimeFetcher.Classes.XML
 {

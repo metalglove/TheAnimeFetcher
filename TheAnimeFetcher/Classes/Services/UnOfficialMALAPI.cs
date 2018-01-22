@@ -13,7 +13,7 @@ using TheAnimeFetcher.Classes.Data;
 using TheAnimeFetcher.Classes.Helpers;
 using TheAnimeFetcher.Classes.HTML;
 using TheAnimeFetcher.Classes.JSON;
-using TheAnimeFetcher.Classes.Services.Enumerations;
+using TheAnimeFetcher.Classes.Constants.Enumerations;
 
 namespace TheAnimeFetcher.Classes.Services
 {

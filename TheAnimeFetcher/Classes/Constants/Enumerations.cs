@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TheAnimeFetcher.Classes.JSON;
 
-namespace TheAnimeFetcher.Classes.Services.Enumerations
+namespace TheAnimeFetcher.Classes.Constants.Enumerations
 {
     public enum HttpContentType
     {

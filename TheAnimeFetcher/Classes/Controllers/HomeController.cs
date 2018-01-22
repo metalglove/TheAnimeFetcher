@@ -7,8 +7,7 @@ using TheAnimeFetcher.Classes.HTML;
 using TheAnimeFetcher.Classes.JSON;
 using TheAnimeFetcher.Classes.Services;
 using Windows.UI.Xaml.Controls;
-using TheAnimeFetcher.Classes.Services.Enumerations;
-using TheAnimeFetcher.Classes.Services;
+using TheAnimeFetcher.Classes.Constants.Enumerations;
 
 namespace TheAnimeFetcher.Classes.Controllers
 {

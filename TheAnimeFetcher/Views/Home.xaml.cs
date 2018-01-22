@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using TheAnimeFetcher.Classes.Services.Enumerations;
+using TheAnimeFetcher.Classes.Constants.Enumerations;
 using TheAnimeFetcher.Classes.Controllers;
 using TheAnimeFetcher.Classes.Helpers;
 using TheAnimeFetcher.Classes.HTML;
