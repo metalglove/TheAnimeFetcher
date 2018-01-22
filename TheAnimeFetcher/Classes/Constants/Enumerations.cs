@@ -82,6 +82,85 @@ namespace TheAnimeFetcher.Classes.Services.Enumerations
         OEL,
         Not_Specified
     }
+    public enum ScoreValues
+    {
+        [Value("Masterpiece")]
+        Masterpiece = 10,
+        [Value("Great")]
+        Great = 9,
+        [Value("Very Good")]
+        Very_Good = 8,
+        [Value("Good")]
+        Good = 7,
+        [Value("Fine")]
+        Fine = 6,
+        [Value("Average")]
+        Average = 5,
+        [Value("Bad")]
+        Bad = 4,
+        [Value("Very Bad")]
+        Very_Bad = 3,
+        [Value("Horrible")]
+        Horrible = 2,
+        [Value("Appalling")]
+        Appalling = 1,
+        [Value("Not Specified")]
+        Not_Specified = 0
+    }
+    public static class ScoreValuesExtensions
+    {
+        public static string GetValue(this ScoreValues value)
+        {
+            return value.GetType().GetField(value.ToString()).GetCustomAttribute<ValueAttribute>().Value;
+        }
+        public static ScoreValues DetermineScoreValue(decimal Score)
+        {
+            if (Score >= 0.50M && Score <= 1.49M)
+            {
+                return ScoreValues.Appalling;
+            }
+            else if (Score >= 1.50M && Score <= 2.49M)
+            {
+                return ScoreValues.Horrible;
+            }
+            else if (Score >= 2.50M && Score <= 3.49M)
+            {
+                return ScoreValues.Very_Bad;
+            }
+            else if (Score >= 3.50M && Score <= 4.49M)
+            {
+                return ScoreValues.Bad;
+            }
+            else if (Score >= 4.50M && Score <= 5.49M)
+            {
+                return ScoreValues.Average;
+            }
+            else if (Score >= 5.50M && Score <= 6.49M)
+            {
+                return ScoreValues.Fine;
+            }
+            else if (Score >= 6.50M && Score <= 7.49M)
+            {
+                return ScoreValues.Good;
+            }
+            else if (Score >= 7.50M && Score <= 8.49M)
+            {
+                return ScoreValues.Very_Good;
+            }
+            else if (Score >= 8.50M && Score <= 9.49M)
+            {
+                return ScoreValues.Great;
+            }
+            else if (Score >= 9.50M && Score <= 10M)
+            {
+                return ScoreValues.Masterpiece;
+            }
+            else
+            {
+                return ScoreValues.Not_Specified;
+            }
+        }
+    }
     public static class HttpContentTypeExtensions
     {
         public static string GetValue(this HttpContentType value)

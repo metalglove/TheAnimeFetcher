@@ -1,13 +1,34 @@
 ﻿using System;
+using TheAnimeFetcher.Classes.Services.Enumerations;
 
 namespace TheAnimeFetcher.Classes.JSON
 {
     public class Anime
     {
         private string _anime_image_path;
+        private decimal _score;
 
         public int status { get; set; }
-        public int score { get; set; }
+        public decimal score
+        {
+            get
+            {
+                return _score;
+            }
+            set
+            {
+                _score = value;
+                ScoreValue = ScoreValuesExtensions.DetermineScoreValue(_score);
+            }
+        }
+        public ScoreValues ScoreValue { get; set; }
+        public string ScoreValueAsString
+        {
+            get
+            {
+                return ScoreValue.GetValue();
+            }
+        }
         public string tags { get; set; }
         public int is_rewatching { get; set; }
         public int num_watched_episodes { get; set; }

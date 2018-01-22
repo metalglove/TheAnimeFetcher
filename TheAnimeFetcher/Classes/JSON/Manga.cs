@@ -1,12 +1,35 @@
-﻿namespace TheAnimeFetcher.Classes.JSON
+﻿using Newtonsoft.Json;
+using TheAnimeFetcher.Classes.Services.Enumerations;
+
+namespace TheAnimeFetcher.Classes.JSON
 {
     public class Manga
     {
         private string _manga_image_path;
+        private decimal _score;
 
         public int id { get; set; }
         public int status { get; set; }
-        public int score { get; set; }
+        public decimal score
+        {
+            get
+            {
+                return _score;
+            }
+            set
+            {
+                _score = value;
+                ScoreValue = ScoreValuesExtensions.DetermineScoreValue(_score);
+            }
+        }
+        public ScoreValues ScoreValue { get; set; }
+        public string ScoreValueAsString
+        {
+            get
+            {
+                return ScoreValue.GetValue();
+            }
+        }
         public string tags { get; set; }
         public int is_rereading { get; set; }
         public int num_read_chapters { get; set; }

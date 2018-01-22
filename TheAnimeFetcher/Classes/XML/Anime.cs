@@ -16,13 +16,8 @@ namespace TheAnimeFetcher.Classes.XML
     public class AnimeEntry
     {
         private string type;
-        private AnimeType _type;
         private string status;
-        private AnimeStatus _status;
-        private DateTime start_date;
-        private string _start_date;
-        private DateTime end_date;
-        private string _end_date;
+        private decimal score;
 
         [XmlElement(ElementName = "id")]
         public int Id { get; set; }
@@ -42,7 +37,28 @@ namespace TheAnimeFetcher.Classes.XML
         [XmlElement(ElementName = "episodes")]
         public int Episodes { get; set; }
         [XmlElement(ElementName = "score")]
-        public decimal Score { get; set; }
+        public decimal Score
+        {
+            get
+            {
+                return score;
+            }
+            set
+            {
+                score = value;
+                ScoreValue = ScoreValuesExtensions.DetermineScoreValue(score);
+            }
+        }
+        [XmlIgnore]
+        public ScoreValues ScoreValue { get; set; }
+        [XmlIgnore]
+        public string ScoreValueAsString
+        {
+            get
+            {
+                return ScoreValue.GetValue();
+            }
+        }
         [XmlElement(ElementName = "type")]
         private string TypeAsString
         {
@@ -53,20 +69,11 @@ namespace TheAnimeFetcher.Classes.XML
             set
             {
                 type = value;
-                _type = (AnimeType)Enum.Parse(typeof(AnimeType), value);
+                Type = (AnimeType)Enum.Parse(typeof(AnimeType), value);
             }
         }
-        public AnimeType Type
-        {
-            get
-            {
-                return _type;
-            }
-            set
-            {
-                _type = value;
-            }
-        }
+        [XmlIgnore]
+        public AnimeType Type { get; set; }
         [XmlElement(ElementName = "status")]
         private string StatusAsString
         {
@@ -77,68 +84,49 @@ namespace TheAnimeFetcher.Classes.XML
             set
             {
                 status = value;
-                _status = (AnimeStatus)Enum.Parse(typeof(AnimeStatus), value.Replace(' ', '_'));
+                Status = (AnimeStatus)Enum.Parse(typeof(AnimeStatus), value.Replace(' ', '_'));
             }
         }
-        public AnimeStatus Status
+        [XmlIgnore]
+        public AnimeStatus Status { get; set; }
+        [XmlIgnore]
+        public DateTime? start_dateAsDateTime
         {
             get
             {
-                return _status;
+                DateTime dt;
+                if (DateTime.TryParse(Start_date, out dt))
+                {
+                    return dt;
+                }
+                return null;
             }
             set
             {
-                _status = value;
+                Start_date = value == null ? "Unknown" : value.Value.ToString("dd-MM-yyyy");
             }
         }
-        [XmlElement(DataType = "date", ElementName = "start_date")] // TODO: Maybe also in DateTime format?
-        private DateTime start_dateAsDateTime
+        [XmlElement(ElementName = "start_date")]
+        public string Start_date { get; set; }
+        [XmlIgnore]
+        public DateTime? end_dateAsDateTime
         {
             get
             {
-                return start_date;
+                DateTime dt;
+                if (DateTime.TryParse(End_date, out dt))
+                {
+                    return dt;
+                }
+                return null;
             }
             set
             {
-                start_date = value;
-                _start_date = start_date.ToString("yyyy-MM-dd") == "0000-00-00" ? "Unknown" : start_date.ToString("yyyy-MM-dd");
+                End_date = value == null ? "Unknown" : value.Value.ToString("dd-MM-yyyy");
             }
         }
-        public string Start_date
-        {
-            get
-            {
-                return _start_date;
-            }
-            set
-            {
-                _start_date = value;
-            }
-        }
-        [XmlElement(DataType = "date", ElementName = "end_date")] // TODO: Maybe also in DateTime format?
-        private DateTime end_dateAsDateTime
-        {
-            get
-            {
-                return end_date;
-            }
-            set
-            {
-                end_date = value;
-                _end_date = end_date.ToString("yyyy-MM-dd") == "0000-00-00" ? "Unknown" : end_date.ToString("yyyy-MM-dd");
-            }
-        }
-        public string End_date
-        {
-            get
-            {
-                return _end_date;
-            }
-            set
-            {
-                _end_date = value;
-            }
-        }
+        [XmlElement(ElementName = "end_date")]
+        public string End_date { get; set; }
         [XmlElement(ElementName = "synopsis")] // TODO: Remove <br /> and insert new line?
         public string synopsis { get; set; }
         [XmlElement(ElementName = "image")] // TODO: Maybe also in Image format?
