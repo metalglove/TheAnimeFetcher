@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TheAnimeFetcher.Classes.HTML;
 using TheAnimeFetcher.Classes.JSON;
 using TheAnimeFetcher.Classes.Services;
 using Windows.UI.Xaml.Controls;
@@ -20,9 +19,9 @@ namespace TheAnimeFetcher.Classes.Controllers
         public static delegateContentFrameNavigate ContentFrameNavigate = Navigator.ContentFrameNavigate;
         #endregion Delegates
 
-        public static async Task<Recommendations> GetRecommendations()
+        public static async Task<RecommendedList> GetRecommendationsFor(RecommendationsType recommendationsType)
         {
-            return await UnofficialMALAPI.GetRecommendations(UserData.User.Credentials);
+            return await UnofficialMALAPI.GetRecommendations(recommendationsType);
         }
         public static async Task<AnimeList> GetAnimeList()
         {

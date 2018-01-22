@@ -5,25 +5,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TheAnimeFetcher.Classes.Data;
-using TheAnimeFetcher.Classes.HTML;
 
 namespace TheAnimeFetcher.Classes.Helpers
 {
     public static class HTMLConverter
     {
-        public static List<Item> GetAnimeRecommendations(string HTMLAsString)
+        public static void ParsePlacementsFromHtml(string HTMLAsString)
         {
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(HTMLAsString);
-            string unfilteredjsonstring = doc.GetElementbyId("v-auto-recommendation-personalized_anime").GetHtmlAttributeValue("data-initial-data");
-            return JSONConverter.DeserializeJSon<Rootobject>("{ \"recommended_animes\":" + unfilteredjsonstring + "}").recommended_animes;
-        }
-        public static List<Item> GetMangaRecommendations(string HTMLAsString)
-        {
-            HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(HTMLAsString);
-            string unfilteredjsonstring = doc.GetElementbyId("v-auto-recommendation-personalized_manga").GetHtmlAttributeValue("data-initial-data");
-            return JSONConverter.DeserializeJSon<Rootobject>("{ \"recommended_mangas\":" + unfilteredjsonstring + "}").recommended_mangas;
+            string placement_manga = doc.GetElementbyId("v-auto-recommendation-personalized_manga").GetHtmlAttributeValue("data-placement");
+            string placement_anime = doc.GetElementbyId("v-auto-recommendation-personalized_anime").GetHtmlAttributeValue("data-placement");
+            if (placement_anime == "" && placement_manga == "")
+            {
+                throw new ArgumentException("Placements not found");
+            }
+            UserData.Instance.Placement_personalized_anime = placement_anime;
+            UserData.Instance.Placement_personalized_manga = placement_manga;
         }
         public static void ParseTokenFromHtml(string HTMLAsString)
         {

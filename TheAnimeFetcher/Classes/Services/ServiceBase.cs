@@ -28,11 +28,6 @@ namespace TheAnimeFetcher.Classes.Services
             HttpClient httpClient = new HttpClient(new HttpClientHandler() { CookieContainer = UserData.Instance.CookieContainer, AllowAutoRedirect = false });
             return await httpClient.GetStringAsync(url);
         }
-        public static async Task<string> GetDataAsync(string url, NetworkCredential credentials, HttpContentType contentType = HttpContentType.JSON)
-        {
-            HttpClient httpClient = new HttpClient(new HttpClientHandler() { CookieContainer = UserData.Instance.CookieContainer, AllowAutoRedirect = false, Credentials = credentials });
-            return await httpClient.GetStringAsync(url);
-        }
         #endregion
 
         #region WebClient

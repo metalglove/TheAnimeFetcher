@@ -8,7 +8,7 @@
     mc:Ignorable="d">
 
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock Text="Recommended Anime:" FontSize="20" FontWeight="Bold"/>
+        <TextBlock Text="{Binding RecommendedList.RecommendedTitle}" FontSize="20" FontWeight="Bold"/>
         <ListView Name="LVAnime" 
                   ScrollViewer.HorizontalScrollMode="Enabled"
                   ScrollViewer.HorizontalScrollBarVisibility="Hidden"
@@ -23,28 +23,6 @@
                     <Grid Width="150" Height="250">
                         <Image Source="{Binding image}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Fill"/>
                         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Bottom" >
-                            <Grid Background="WhiteSmoke" Opacity="0.7"></Grid>
-                            <TextBlock Text="{Binding title}" FontSize="17" TextWrapping="WrapWholeWords" TextAlignment="Center"/>
-                        </Grid>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <TextBlock Text="Recommended Manga:" FontSize="20" FontWeight="Bold"/>
-        <ListView Name="LVManga" 
-                  ScrollViewer.HorizontalScrollMode="Enabled"
-                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                  ScrollViewer.IsHorizontalRailEnabled="True">
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VirtualizingStackPanel Orientation="Horizontal" />
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Width="150" Height="250">
-                        <Image Source="{Binding image}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Fill"/>
-                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
                             <Grid Background="WhiteSmoke" Opacity="0.7"></Grid>
                             <TextBlock Text="{Binding title}" FontSize="17" TextWrapping="WrapWholeWords" TextAlignment="Center"/>
                         </Grid>

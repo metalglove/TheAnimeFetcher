@@ -101,13 +101,13 @@
     <Compile Include="Classes\Helpers\HTMLConverter.cs" />
     <Compile Include="Classes\Helpers\JSONConverter.cs" />
     <Compile Include="Classes\Helpers\XMLConverter.cs" />
-    <Compile Include="Classes\HTML\Rootobject.cs" />
     <Compile Include="Classes\JSON\Anime.cs" />
     <Compile Include="Classes\JSON\AnimeList.cs" />
     <Compile Include="Classes\JSON\Manga.cs" />
     <Compile Include="Classes\JSON\MangaList.cs" />
     <Compile Include="Classes\Constants\Enumerations.cs" />
-    <Compile Include="Classes\HTML\Recommendations.cs" />
+    <Compile Include="Classes\JSON\Recommended.cs" />
+    <Compile Include="Classes\JSON\RecommendedList.cs" />
     <Compile Include="Classes\JSON\Search.cs" />
     <Compile Include="Classes\Services\ServiceBase.cs" />
     <Compile Include="Classes\Services\OfficialMALAPI.cs" />
@@ -216,7 +216,9 @@
       <Version>10.0.3</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Classes\HTML\" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\AnimeControl.xaml">
       <SubType>Designer</SubType>

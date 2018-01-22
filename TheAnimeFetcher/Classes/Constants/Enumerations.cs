@@ -107,6 +107,13 @@ namespace TheAnimeFetcher.Classes.Constants.Enumerations
         [Value("Not Specified")]
         Not_Specified = 0
     }
+    public enum RecommendationsType
+    {
+        [Value("Recommended Anime:"), Type(typeof(RecommendedList))]
+        Anime,
+        [Value("Recommended Manga:"), Type(typeof(RecommendedList))]
+        Manga
+    }
     public static class ScoreValuesExtensions
     {
         public static string GetValue(this ScoreValues value)
@@ -174,7 +181,7 @@ namespace TheAnimeFetcher.Classes.Constants.Enumerations
         {
             return value.GetType().GetField(value.ToString()).GetCustomAttribute<ValueAttribute>().Value;
         }
-        public static Type GetMALSearchType(this UnofficialMALSearchType type)
+        public static Type GetUnofficialMALSearchType(this UnofficialMALSearchType type)
         {
             return type.GetType().GetField(type.ToString()).GetCustomAttribute<TypeAttribute>().Type;
         }
@@ -185,7 +192,18 @@ namespace TheAnimeFetcher.Classes.Constants.Enumerations
         {
             return value.GetType().GetField(value.ToString()).GetCustomAttribute<ValueAttribute>().Value;
         }
-        public static Type GetMALSearchType(this OfficialMALSearchType type)
+        public static Type GetOfficialMALSearchType(this OfficialMALSearchType type)
+        {
+            return type.GetType().GetField(type.ToString()).GetCustomAttribute<TypeAttribute>().Type;
+        }
+    }
+    public static class RecommendationsTypeExtensions
+    {
+        public static string GetValue(this RecommendationsType value)
+        {
+            return value.GetType().GetField(value.ToString()).GetCustomAttribute<ValueAttribute>().Value;
+        }
+        public static Type GetRecommendationsType(this RecommendationsType type)
         {
             return type.GetType().GetField(type.ToString()).GetCustomAttribute<TypeAttribute>().Type;
         }

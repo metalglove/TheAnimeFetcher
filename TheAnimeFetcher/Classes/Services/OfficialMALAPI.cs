@@ -65,7 +65,7 @@ namespace TheAnimeFetcher.Classes.Services
                 if (EnsureStatusCode(response))
                 {
                     StreamReader responseStream = new StreamReader(response.GetResponseStream());
-                    AnimeOrManga = XMLConverter.DeserializeXmlAsStringToClass(responseStream.ReadToEnd(), SearchType.GetMALSearchType());
+                    AnimeOrManga = XMLConverter.DeserializeXmlAsStringToClass(responseStream.ReadToEnd(), SearchType.GetOfficialMALSearchType());
                 }
             }
             catch (WebException ex)

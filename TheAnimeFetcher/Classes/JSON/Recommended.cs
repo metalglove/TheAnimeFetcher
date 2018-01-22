@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TheAnimeFetcher.Classes.Constants.Enumerations;
 
-namespace TheAnimeFetcher.Classes.HTML
+namespace TheAnimeFetcher.Classes.JSON
 {
-    public class Rootobject
+    public class Recommended
     {
-        public List<Item> recommended_animes { get; set; }
-        public List<Item> recommended_mangas { get; set; }
-    }
-    public class Item
-    {
+        public RecommendationsType Type { get; set; }
         public int id { get; set; }
         public string title { get; set; }
         public string path { get; set; }

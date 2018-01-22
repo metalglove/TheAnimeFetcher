@@ -10,6 +10,7 @@ namespace TheAnimeFetcher.Classes.JSON
 {
     public class MangaList : ObservableCollection<Manga>
     {
+
     }
     public static class MangaListExtensions
     {

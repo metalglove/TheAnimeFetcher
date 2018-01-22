@@ -11,7 +11,6 @@ using System.Text;
 using System.Threading.Tasks;
 using TheAnimeFetcher.Classes.Data;
 using TheAnimeFetcher.Classes.Helpers;
-using TheAnimeFetcher.Classes.HTML;
 using TheAnimeFetcher.Classes.JSON;
 using TheAnimeFetcher.Classes.Constants.Enumerations;
 
@@ -23,22 +22,29 @@ namespace TheAnimeFetcher.Classes.Services
         private const string MAL_URL = "https://myanimelist.net/";
         #endregion
 
-        #region Token
-        private static async Task GetToken()
-        {
-            HTMLConverter.ParseTokenFromHtml(await GetDataAsync(MAL_URL + "Login.php", HttpContentType.HTML));
-        }
-        private static async Task CheckForToken()
+        #region Token, Login And Placements
+        private static async Task CheckForTokenAndPlacements()
         {
             if (UserData.Instance.CSRF_Token == null)
             {
                 await GetToken();
                 await Login();
+                await GetPlacements();
             }
+        }
+        private static async Task GetToken()
+        {
+            string HTML = await GetDataAsync(MAL_URL + "Login.php", HttpContentType.HTML);
+            HTMLConverter.ParseTokenFromHtml(HTML);
         }
         private static async Task Login()
         {
-            string z = await PostDataAsync(MAL_URL + "Login.php", LoginPostData);
+            string HTML = await PostDataAsync(MAL_URL + "Login.php", LoginPostData);
+        }
+        private static async Task GetPlacements()
+        {
+            string HTML = await GetDataAsync(MAL_URL, HttpContentType.HTML);
+            HTMLConverter.ParsePlacementsFromHtml(HTML);
         }
 
         private static FormUrlEncodedContent LoginPostData
@@ -59,25 +65,26 @@ namespace TheAnimeFetcher.Classes.Services
         }
         #endregion
 
-        public static async Task<Recommendations> GetRecommendations(NetworkCredential credentials)
+        public static async Task<RecommendedList> GetRecommendations(RecommendationsType recommendationsType)
         {
-            await CheckForToken();
-            Recommendations recommendations = new Recommendations();
+            await CheckForTokenAndPlacements();
+            RecommendedList recommendations = new RecommendedList();
             HttpWebResponse response = null;
             try
             {
-                response = await SendHttpWebGETRequest(credentials, MAL_URL, HttpContentType.HTML);
+                response = await SendHttpWebGETRequest(UserData.Instance.User.Credentials, MAL_URL + "auto_recommendation/personalized_suggestions.json?placement=" + UserData.Instance.GetPlacementFor(recommendationsType), HttpContentType.JSON);
                 if (EnsureStatusCode(response))
                 {
                     StreamReader responseStream = new StreamReader(response.GetResponseStream());
                     string responseAsString = responseStream.ReadToEnd();
-                    recommendations.AnimeRecommendations = HTMLConverter.GetAnimeRecommendations(responseAsString);
-                    recommendations.MangaRecommendations = HTMLConverter.GetMangaRecommendations(responseAsString);
+                    recommendations = JSONConverter.DeserializeJSon(responseAsString, recommendationsType.GetRecommendationsType()) as RecommendedList;
+                    recommendations.RecommendationsType = recommendationsType;
+                    recommendations.Where(recommended => recommended.Type != recommendationsType).Select(recommended => recommended.Type = recommendationsType);
                 }
             }
-            catch (WebException ex)
+            catch (Exception ex)
             {
-                Debug.Write("GetRecommendations: WebException response: " + ex.Status);
+                Debug.Write("GetRecommendations: Exception response: " + ex.Message);
             }
             finally
             {
@@ -153,7 +160,7 @@ namespace TheAnimeFetcher.Classes.Services
             try
             {
                 string resultAsString = await GetDataAsync(MAL_URL + "search/prefix.json?type=" + ContentType.GetValue() + "&keyword=" + TrimmedKeyword, HttpContentType.JSON);
-                result = JSONConverter.DeserializeJSon(resultAsString, ContentType.GetMALSearchType());
+                result = JSONConverter.DeserializeJSon(resultAsString, ContentType.GetUnofficialMALSearchType());
             }
             catch (Exception ex)
             {
