@@ -106,11 +106,14 @@
     <Compile Include="Classes\JSON\AnimeList.cs" />
     <Compile Include="Classes\JSON\Manga.cs" />
     <Compile Include="Classes\JSON\MangaList.cs" />
-    <Compile Include="Classes\Services\ContentType.cs" />
+    <Compile Include="Classes\Constants\Enumerations.cs" />
     <Compile Include="Classes\HTML\Recommendations.cs" />
+    <Compile Include="Classes\JSON\Search.cs" />
     <Compile Include="Classes\Services\ServiceBase.cs" />
     <Compile Include="Classes\Services\OfficialMALAPI.cs" />
     <Compile Include="Classes\Services\UnofficialMALAPI.cs" />
+    <Compile Include="Classes\XML\Anime.cs" />
+    <Compile Include="Classes\XML\Manga.cs" />
     <Compile Include="Classes\XML\User.cs" />
     <Compile Include="Controls\AnimeControl.xaml.cs">
       <DependentUpon>AnimeControl.xaml</DependentUpon>

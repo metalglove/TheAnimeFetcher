@@ -12,7 +12,9 @@ using System.Threading.Tasks;
 using System.Xml;
 using TheAnimeFetcher.Classes.Data;
 using TheAnimeFetcher.Classes.Helpers;
+using TheAnimeFetcher.Classes.Services.Enumerations;
 using TheAnimeFetcher.Classes.XML;
+using TheAnimeFetcher.Classes.Services;
 
 namespace TheAnimeFetcher.Classes.Services
 {
@@ -28,7 +30,7 @@ namespace TheAnimeFetcher.Classes.Services
             User User = new User();
             try
             {
-                response = await SendHttpWebGETRequest(credentials, MAL_API_URL + "account/verify_credentials.xml", ContentType.XML);
+                response = await SendHttpWebGETRequest(credentials, MAL_API_URL + "account/verify_credentials.xml", HttpContentType.XML);
                 if (EnsureStatusCode(response))
                 {
                     StreamReader responseStream = new StreamReader(response.GetResponseStream());
@@ -38,7 +40,7 @@ namespace TheAnimeFetcher.Classes.Services
             }
             catch (WebException ex)
             {
-                Debug.Write("WebException response: " + ex.Status);
+                Debug.Write("VerifyCredentials:\nWebException response: " + ex.Status);
             }
             finally
             {
@@ -48,6 +50,37 @@ namespace TheAnimeFetcher.Classes.Services
                 }
             }
             return User;
+        }
+        public static async Task<object> Search(string Keyword, OfficialMALSearchType SearchType)
+        {
+            string TrimmedKeyword = Keyword.Trim();
+            if (TrimmedKeyword.Length < 1)
+            {
+                return null;
+            }
+            object AnimeOrManga = new object();
+            HttpWebResponse response = null;
+            try
+            {
+                response = await SendHttpWebGETRequest(UserData.Instance.User.Credentials, MAL_API_URL + SearchType.GetValue() +"/search.xml?q=" + TrimmedKeyword, HttpContentType.XML);
+                if (EnsureStatusCode(response))
+                {
+                    StreamReader responseStream = new StreamReader(response.GetResponseStream());
+                    AnimeOrManga = XMLConverter.DeserializeXmlAsStringToClass(responseStream.ReadToEnd(), SearchType.GetMALSearchType());
+                }
+            }
+            catch (WebException ex)
+            {
+                Debug.Write("Search:\nWebException response: " + ex.Status);
+            }
+            finally
+            {
+                if (response != null)
+                {
+                    response.Dispose();
+                }
+            }
+            return AnimeOrManga;
         }
     }
 }

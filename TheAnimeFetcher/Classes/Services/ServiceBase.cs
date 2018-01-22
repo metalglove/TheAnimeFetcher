@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using TheAnimeFetcher.Classes.Data;
 using System.Net.Http;
+using TheAnimeFetcher.Classes.Services.Enumerations;
 
 namespace TheAnimeFetcher.Classes.Services
 {
     public abstract class ServiceBase
     {
+        // TODO: HttpClient HttpContentType checker
         #region HttpClient
         public static async Task<string> PostDataAsync(string url, FormUrlEncodedContent postData)
         {
@@ -21,12 +23,12 @@ namespace TheAnimeFetcher.Classes.Services
             HttpResponseMessage response = await client.PostAsync(request.RequestUri, request.Content);
             return await response.Content.ReadAsStringAsync();
         }
-        public static async Task<string> GetDataAsync(string url)
+        public static async Task<string> GetDataAsync(string url, HttpContentType contentType = HttpContentType.JSON)
         {
             HttpClient httpClient = new HttpClient(new HttpClientHandler() { CookieContainer = UserData.Instance.CookieContainer, AllowAutoRedirect = false });
             return await httpClient.GetStringAsync(url);
         }
-        public static async Task<string> GetDataAsync(string url, NetworkCredential credentials)
+        public static async Task<string> GetDataAsync(string url, NetworkCredential credentials, HttpContentType contentType = HttpContentType.JSON)
         {
             HttpClient httpClient = new HttpClient(new HttpClientHandler() { CookieContainer = UserData.Instance.CookieContainer, AllowAutoRedirect = false, Credentials = credentials });
             return await httpClient.GetStringAsync(url);
@@ -34,13 +36,13 @@ namespace TheAnimeFetcher.Classes.Services
         #endregion
 
         #region WebClient
-        protected static async Task<HttpWebResponse> SendHttpWebGETRequest(NetworkCredential credentials, string requesteduri, ContentType contentType)
+        protected static async Task<HttpWebResponse> SendHttpWebGETRequest(NetworkCredential credentials, string requesteduri, HttpContentType contentType)
         {
             HttpWebRequest request = GetHttpWebGetRequest(credentials, requesteduri, contentType);
             HttpWebResponse response = await request.GetResponseAsync() as HttpWebResponse;
             return response;
         }
-        private static HttpWebRequest GetHttpWebGetRequest(NetworkCredential credentials, string requesteduri, ContentType contentType)
+        private static HttpWebRequest GetHttpWebGetRequest(NetworkCredential credentials, string requesteduri, HttpContentType contentType)
         {
             HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(requesteduri);
             webRequest.Method = "GET";

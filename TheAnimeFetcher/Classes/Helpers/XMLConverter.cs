@@ -16,6 +16,10 @@ namespace TheAnimeFetcher.Classes.Helpers
         {
             return (T)new XmlSerializer(typeof(T)).Deserialize(new StringReader(XmlAsString));
         }
+        public static object DeserializeXmlAsStringToClass(string XmlAsString, Type Type)
+        {
+            return new XmlSerializer(Type).Deserialize(new StringReader(XmlAsString));
+        }
         public static XmlDocument DeserializeClassToXml<T>(T Class)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(T));

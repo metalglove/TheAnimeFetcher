@@ -13,6 +13,7 @@ using TheAnimeFetcher.Classes.Data;
 using TheAnimeFetcher.Classes.Helpers;
 using TheAnimeFetcher.Classes.HTML;
 using TheAnimeFetcher.Classes.JSON;
+using TheAnimeFetcher.Classes.Services.Enumerations;
 
 namespace TheAnimeFetcher.Classes.Services
 {
@@ -25,7 +26,7 @@ namespace TheAnimeFetcher.Classes.Services
         #region Token
         private static async Task GetToken()
         {
-            HTMLConverter.ParseTokenFromHtml(await GetDataAsync(MAL_URL + "Login.php"));
+            HTMLConverter.ParseTokenFromHtml(await GetDataAsync(MAL_URL + "Login.php", HttpContentType.HTML));
         }
         private static async Task CheckForToken()
         {
@@ -65,7 +66,7 @@ namespace TheAnimeFetcher.Classes.Services
             HttpWebResponse response = null;
             try
             {
-                response = await SendHttpWebGETRequest(credentials, MAL_URL, ContentType.HTML);
+                response = await SendHttpWebGETRequest(credentials, MAL_URL, HttpContentType.HTML);
                 if (EnsureStatusCode(response))
                 {
                     StreamReader responseStream = new StreamReader(response.GetResponseStream());
@@ -93,7 +94,7 @@ namespace TheAnimeFetcher.Classes.Services
             HttpWebResponse response = null;
             try
             {
-                response = await SendHttpWebGETRequest(credentials, MAL_URL + "animelist/"+ Username + "/load.json", ContentType.JSON);
+                response = await SendHttpWebGETRequest(credentials, MAL_URL + "animelist/"+ Username + "/load.json", HttpContentType.JSON);
                 if (EnsureStatusCode(response))
                 {
                     StreamReader responseStream = new StreamReader(response.GetResponseStream());
@@ -120,7 +121,7 @@ namespace TheAnimeFetcher.Classes.Services
             HttpWebResponse response = null;
             try
             {
-                response = await SendHttpWebGETRequest(credentials, MAL_URL + "mangalist/" + Username + "/load.json", ContentType.JSON);
+                response = await SendHttpWebGETRequest(credentials, MAL_URL + "mangalist/" + Username + "/load.json", HttpContentType.JSON);
                 if (EnsureStatusCode(response))
                 {
                     StreamReader responseStream = new StreamReader(response.GetResponseStream());
@@ -140,6 +141,32 @@ namespace TheAnimeFetcher.Classes.Services
                 }
             }
             return mangaList;
+        }
+        public static async Task<object> SearchMAL(string Keyword, UnofficialMALSearchType ContentType = UnofficialMALSearchType.All)
+        {
+            string TrimmedKeyword = Keyword.Trim();
+            if (TrimmedKeyword.Length < 1)
+            {
+                return null;
+            }
+            object result = null;
+            try
+            {
+                string resultAsString = await GetDataAsync(MAL_URL + "search/prefix.json?type=" + ContentType.GetValue() + "&keyword=" + TrimmedKeyword, HttpContentType.JSON);
+                result = JSONConverter.DeserializeJSon(resultAsString, ContentType.GetMALSearchType());
+            }
+            catch (Exception ex)
+            {
+                Debug.Write("SearchMAL: Exception value: " + ex.Message);
+            }
+            finally
+            {
+                if (result == null)
+                {
+                    throw new ArgumentException("SearchMAL: exception");
+                }
+            }
+            return result;
         }
     }
 }

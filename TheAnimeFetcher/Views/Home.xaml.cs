@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using TheAnimeFetcher.Classes.Services.Enumerations;
 using TheAnimeFetcher.Classes.Controllers;
 using TheAnimeFetcher.Classes.Helpers;
 using TheAnimeFetcher.Classes.HTML;
@@ -33,10 +34,13 @@ namespace TheAnimeFetcher.Views
         }
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            Recommendations = await HomeController.GetRecommendations();
-            AnimeList = await HomeController.GetAnimeList();
-            MangaList = await HomeController.GetMangaList();
-            HomeController.ContentFrameNavigate(typeof(AnimeListControl), AnimeList);
+            //Classes.XML.Anime Animes = await HomeController.SearchAnime("Naruto");
+            Classes.XML.Manga Mangas = await HomeController.SearchManga("Naruto");
+            //Search SearchResult = await HomeController.SearchMAL("Naruto", UnofficialMALSearchType.All);
+            //Recommendations = await HomeController.GetRecommendations();
+            //AnimeList = await HomeController.GetAnimeList();
+            //MangaList = await HomeController.GetMangaList();
+            //HomeController.ContentFrameNavigate(typeof(AnimeListControl), AnimeList);
             //HomeController.ContentFrameNavigate(typeof(MangaListControl), MangaList);
             //HomeController.ContentFrameNavigate(typeof(RecommendationsControl), Recommendations);
         }

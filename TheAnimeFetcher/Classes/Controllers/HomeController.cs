@@ -7,6 +7,8 @@ using TheAnimeFetcher.Classes.HTML;
 using TheAnimeFetcher.Classes.JSON;
 using TheAnimeFetcher.Classes.Services;
 using Windows.UI.Xaml.Controls;
+using TheAnimeFetcher.Classes.Services.Enumerations;
+using TheAnimeFetcher.Classes.Services;
 
 namespace TheAnimeFetcher.Classes.Controllers
 {
@@ -48,6 +50,18 @@ namespace TheAnimeFetcher.Classes.Controllers
                 UserData.MangaListChanged = true;
                 return UserData.MangaList;
             }
+        }
+        public static async Task<XML.Anime> SearchAnime(string AnimeKeyword)
+        {
+            return await OfficialMALAPI.Search(AnimeKeyword, OfficialMALSearchType.Anime) as XML.Anime;
+        }
+        public static async Task<XML.Manga> SearchManga(string MangaKeyword)
+        {
+            return await OfficialMALAPI.Search(MangaKeyword, OfficialMALSearchType.Manga) as XML.Manga;
+        }
+        public static async Task<Search> SearchMAL(string Keyword, UnofficialMALSearchType SearchType = UnofficialMALSearchType.All)
+        {
+            return await UnofficialMALAPI.SearchMAL(Keyword, SearchType) as Search;
         }
     }
 }

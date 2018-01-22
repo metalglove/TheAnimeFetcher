@@ -13,5 +13,9 @@ namespace TheAnimeFetcher.Classes.Helpers
         {
             return JsonConvert.DeserializeObject<T>(Json);
         }
+        public static object DeserializeJSon(string Json, Type type)
+        {
+            return JsonConvert.DeserializeObject(Json, type);
+        }
     }
 }
