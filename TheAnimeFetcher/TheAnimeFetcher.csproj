@@ -114,6 +114,7 @@
     <Compile Include="Classes\Services\UnofficialMALAPI.cs" />
     <Compile Include="Classes\XML\Anime.cs" />
     <Compile Include="Classes\XML\Manga.cs" />
+    <Compile Include="Classes\XML\Rss.cs" />
     <Compile Include="Classes\XML\User.cs" />
     <Compile Include="Controls\AnimeControl.xaml.cs">
       <DependentUpon>AnimeControl.xaml</DependentUpon>

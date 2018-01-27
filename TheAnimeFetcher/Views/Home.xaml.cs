@@ -8,6 +8,7 @@ using TheAnimeFetcher.Classes.Constants.Enumerations;
 using TheAnimeFetcher.Classes.Controllers;
 using TheAnimeFetcher.Classes.Helpers;
 using TheAnimeFetcher.Classes.JSON;
+using TheAnimeFetcher.Classes.XML;
 using TheAnimeFetcher.Controls;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -26,6 +27,10 @@ namespace TheAnimeFetcher.Views
         public RecommendedList RecommendedList { get; private set; }
         public AnimeList AnimeList { get; private set; }
         public MangaList MangaList { get; private set; }
+        public Classes.XML.Anime Anime { get; private set; }
+        public Classes.XML.Manga Manga { get; private set; }
+        public Search Search { get; private set; }
+        public Recent Recent { get; private set; }
         public Home()
         {
             this.InitializeComponent();
@@ -33,15 +38,17 @@ namespace TheAnimeFetcher.Views
         }
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            //Classes.XML.Anime Animes = await HomeController.SearchAnime("Naruto");
-            //Classes.XML.Manga Mangas = await HomeController.SearchManga("Naruto");
-            //Search SearchResult = await HomeController.SearchMAL("Naruto", UnofficialMALSearchType.All);
-            RecommendedList = await HomeController.GetRecommendationsFor(RecommendationsType.Anime);
+            //Anime = await HomeController.SearchAnime("Naruto");
+            //Manga = await HomeController.SearchManga("Naruto");
+            //Search = await HomeController.SearchMAL("Naruto", UnofficialMALSearchType.All);
+            //RecommendedList = await HomeController.GetRecommendationsFor(RecommendationsType.Anime);
             //AnimeList = await HomeController.GetAnimeList();
             //MangaList = await HomeController.GetMangaList();
+            Recent = await HomeController.GetRecentsFor(RecentType.Anime_by_episode);
+            //Recent = await HomeController.GetRecentsFor(RecentType.Anime, "Kineta");
             //HomeController.ContentFrameNavigate(typeof(AnimeListControl), AnimeList);
             //HomeController.ContentFrameNavigate(typeof(MangaListControl), MangaList);
-            HomeController.ContentFrameNavigate(typeof(RecommendationsControl), RecommendedList);
+            //HomeController.ContentFrameNavigate(typeof(RecommendationsControl), RecommendedList);
         }
     }
 }

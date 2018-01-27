@@ -13,6 +13,7 @@ using TheAnimeFetcher.Classes.Data;
 using TheAnimeFetcher.Classes.Helpers;
 using TheAnimeFetcher.Classes.JSON;
 using TheAnimeFetcher.Classes.Constants.Enumerations;
+using TheAnimeFetcher.Classes.XML;
 
 namespace TheAnimeFetcher.Classes.Services
 {
@@ -174,6 +175,27 @@ namespace TheAnimeFetcher.Classes.Services
                 }
             }
             return result;
+        }
+        public static async Task<Recent> GetRecentsFor(RecentType RecentType, string Username)
+        {
+            Rss Rss = null;
+            try
+            {
+                string resultAsString = await GetDataAsync(MAL_URL + "rss.php?type=" + RecentType.GetValue() + "&u=" + Username, HttpContentType.XML);
+                Rss = XMLConverter.DeserializeXmlAsStringToClass<Rss>(resultAsString);
+            }
+            catch (Exception ex)
+            {
+                Debug.Write("SearchMAL: Exception value: " + ex.Message);
+            }
+            finally
+            {
+                if (Rss == null)
+                {
+                    throw new ArgumentException("GetRecentsFor: exception");
+                }
+            }
+            return Rss.Recent;
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using TheAnimeFetcher.Classes.JSON;
+using TheAnimeFetcher.Classes.XML;
 
 namespace TheAnimeFetcher.Classes.Constants.Enumerations
 {
@@ -113,6 +114,28 @@ namespace TheAnimeFetcher.Classes.Constants.Enumerations
         Anime,
         [Value("Recommended Manga:"), Type(typeof(RecommendedList))]
         Manga
+    }
+    public enum RecentType
+    {
+        [Value("rw"), Type(typeof(Rss))]
+        Anime,
+        [Value("rwe"), Type(typeof(Rss))]
+        Anime_by_episode,
+        [Value("rm"), Type(typeof(Rss))]
+        Manga,
+        [Value("rrm"), Type(typeof(Rss))]
+        Manga_by_chapter
+    }
+    public static class RecentTypeExtensions
+    {
+        public static string GetValue(this RecentType value)
+        {
+            return value.GetType().GetField(value.ToString()).GetCustomAttribute<ValueAttribute>().Value;
+        }
+        public static Type GetRecentType(this RecentType type)
+        {
+            return type.GetType().GetField(type.ToString()).GetCustomAttribute<TypeAttribute>().Type;
+        }
     }
     public static class ScoreValuesExtensions
     {

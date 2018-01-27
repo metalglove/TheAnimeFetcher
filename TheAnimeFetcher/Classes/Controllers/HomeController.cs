@@ -7,6 +7,7 @@ using TheAnimeFetcher.Classes.JSON;
 using TheAnimeFetcher.Classes.Services;
 using Windows.UI.Xaml.Controls;
 using TheAnimeFetcher.Classes.Constants.Enumerations;
+using TheAnimeFetcher.Classes.XML;
 
 namespace TheAnimeFetcher.Classes.Controllers
 {
@@ -19,9 +20,9 @@ namespace TheAnimeFetcher.Classes.Controllers
         public static delegateContentFrameNavigate ContentFrameNavigate = Navigator.ContentFrameNavigate;
         #endregion Delegates
 
-        public static async Task<RecommendedList> GetRecommendationsFor(RecommendationsType recommendationsType)
+        public static async Task<RecommendedList> GetRecommendationsFor(RecommendationsType RecommendationsType)
         {
-            return await UnofficialMALAPI.GetRecommendations(recommendationsType);
+            return await UnofficialMALAPI.GetRecommendations(RecommendationsType);
         }
         public static async Task<AnimeList> GetAnimeList()
         {
@@ -60,6 +61,14 @@ namespace TheAnimeFetcher.Classes.Controllers
         public static async Task<Search> SearchMAL(string Keyword, UnofficialMALSearchType SearchType = UnofficialMALSearchType.All)
         {
             return await UnofficialMALAPI.SearchMAL(Keyword, SearchType) as Search;
+        }
+        public static async Task<Recent> GetRecentsFor(RecentType RecentType)
+        {
+            return await UnofficialMALAPI.GetRecentsFor(RecentType, UserData.User.Username);
+        }
+        public static async Task<Recent> GetRecentsFor(RecentType RecentType, string Username)
+        {
+            return await UnofficialMALAPI.GetRecentsFor(RecentType, Username);
         }
     }
 }
